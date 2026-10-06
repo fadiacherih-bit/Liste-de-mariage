@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liste de mariage — Fadia &amp; Moussa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--green-deep:#8C6A2F;--green-soft:#F3E9D6;--gold:#C9A227;--gold-light:#E4D2A3;--ivory:#FBF6EA;--blush:#E9DCBE;--ink:#3A2E1F;--ink-soft:#7C6D51;--white:#FFFCF5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ivory);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;line-height:1.7}
+h1,h2{font-family:'Cormorant Garamond',serif;color:var(--green-deep);font-weight:500}
+.wrap{max-width:720px;margin:0 auto;padding:0 24px}
+.hero{padding:80px 24px 56px;text-align:center}
+.divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 auto 28px;width:100%;max-width:220px}
+.divider span{flex:1;height:1px;background:var(--gold-light)}
+.divider svg{flex-shrink:0}
+.hero .kicker{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(2.6rem,7vw,4.2rem);color:var(--green-deep);margin-bottom:4px}
+.hero h1{font-size:clamp(2.6rem,7vw,4.2rem);margin:0 0 6px;letter-spacing:.3px}
+.hero .date{font-size:1rem;letter-spacing:1.5px;color:var(--gold);margin-bottom:34px}
+.hero p{font-size:1.08rem;color:var(--ink-soft);max-width:480px;margin:0 auto}
+.hero p+p{margin-top:16px}
+.hero .signature{margin-top:30px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--green-deep)}
+.dua{background:var(--green-soft);border-top:1px solid var(--blush);border-bottom:1px solid var(--blush);padding:52px 24px;text-align:center}
+.dua .wrap{max-width:560px}
+.dua .label{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1.15rem;margin-bottom:18px}
+.dua p{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--green-deep);margin:0 0 10px;line-height:1.55}
+.dua .amine{margin-top:18px;font-size:.85rem;letter-spacing:2px;color:var(--ink-soft)}
+.dua .arabic{direction:rtl;font-family:'Amiri','Cormorant Garamond',serif;font-size:1.7rem;color:var(--green-deep);line-height:2;margin:26px 0 6px}
+.dua .divider-small{width:60px;height:1px;background:var(--gold-light);margin:28px auto 0}
+.gifts{padding:64px 24px 40px}
+.gifts h2{text-align:center;font-size:2.1rem;margin:0 0 8px}
+.gifts .sub{text-align:center;color:var(--ink-soft);font-size:.95rem;margin-bottom:44px}
+.gift-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media (max-width:620px){.gift-grid{grid-template-columns:1fr}}
+.gift-card{border:1px solid var(--blush);background:var(--white);padding:22px 22px 20px;display:flex;flex-direction:column;gap:10px}
+.gift-card .name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--green-deep);font-weight:600}
+.gift-card .photo{width:100%;height:160px;object-fit:cover;border:1px solid var(--blush);margin-bottom:2px}
+.gift-card .price{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--gold);line-height:1.2}
+.gift-card .desc{font-size:.92rem;color:var(--ink-soft);flex-grow:1}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;width:fit-content;padding:4px 12px;border:1px solid var(--gold-light);color:var(--gold)}
+.status.taken{border-color:var(--green-deep);color:var(--green-deep);background:var(--green-soft)}
+.status .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.btn{font-family:'Jost',sans-serif;font-size:.85rem;padding:9px 16px;border:1px solid var(--green-deep);background:transparent;color:var(--green-deep);cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s ease,color .2s ease}
+.btn:hover{background:var(--green-deep);color:var(--white)}
+.btn.primary{background:var(--green-deep);color:var(--white)}
+.btn.primary:hover{background:var(--gold);border-color:var(--gold)}
+.btn.ghost{border-color:var(--blush);color:var(--ink-soft);font-size:.78rem;padding:6px 12px}
+.btn.ghost:hover{background:var(--blush);color:var(--ink)}
+.btn:focus-visible,input:focus-visible,footer button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.empty{text-align:center;color:var(--ink-soft);font-size:.95rem;padding:30px 0}
+.admin-panel{display:none;margin-top:30px;padding:26px 24px;border:1px dashed var(--gold-light);background:var(--white)}
+.admin-panel h3{font-family:'Cormorant Garamond',serif;color:var(--green-deep);font-size:1.3rem;margin:0 0 16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:.78rem;color:var(--ink-soft);margin-bottom:5px}
+.field input,.gift-card input{width:100%;border:1px solid var(--blush);background:var(--ivory);padding:9px 11px;font-family:'Jost',sans-serif;font-size:.9rem;color:var(--ink)}
+.card-admin-row{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+#status{text-align:center;color:var(--ink-soft);font-size:.85rem;min-height:1.4em;margin-top:18px}
+footer{text-align:center;padding:30px 24px 60px}
+footer button{background:none;border:none;color:var(--ink-soft);font-family:'Jost',sans-serif;font-size:.78rem;text-decoration:underline;cursor:pointer}
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="wrap">
+    <div class="divider"><span></span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 9 7 9 11C9 13.7614 10.7909 16 13 16C15.2091 16 17 14.2091 17 12C17 12 14 12 12 2Z" stroke="#AD8A4E" stroke-width="1"></path><path d="M12 22C12 22 15 17 15 13" stroke="#AD8A4E" stroke-width="1"></path></svg>
+    <span></span></div>
+    <div class="kicker">Liste de mariage</div>
+    <h1>Fadia &amp; Moussa</h1>
+    <div class="date">8 mai 2027</div>
+    <p>Chers proches, nous sommes profondément touchés de vous savoir à nos côtés pour ce jour si important. Votre présence est, avant toute chose, le plus beau des cadeaux que vous puissiez nous faire.</p>
+    <p>Nous vous remercions infiniment pour ce geste, qui nous touche énormément.</p>
+    <div class="signature">Avec tout notre amour,<br>Fadia &amp; Moussa</div>
+  </div>
+</section>
+<section class="dua">
+  <div class="wrap">
+    <div class="label">Une pensée pour vous</div>
+    <div class="arabic" lang="ar">جزاكم الله خيرا على محبتكم وكرمكم،<br>وبارك الله في أسركم، ورزقكم الصحة وراحة القلب وبركته،<br>وأبقاكم دائما قريبين منا.</div>
+    <div class="divider-small"></div>
+    <p>Qu'Allah vous récompense pour votre amour et votre générosité,</p>
+    <p>qu'Il bénisse vos familles, vous accorde la santé, la paix du cœur et Sa barakah,</p>
+    <p>et qu'Il vous garde toujours proches de nous.</p>
+    <div class="amine">Amine</div>
+  </div>
+</section>
+<section class="gifts">
+  <div class="wrap">
+    <h2>Notre liste</h2>
+    <div class="sub">Le statut de chaque cadeau est mis à jour par les mariés</div>
+    <div id="root"></div>
+    <div class="admin-panel" id="admin">
+      <h3>Ajouter un cadeau</h3>
+      <div class="field"><label for="n">Nom du cadeau</label><input id="n" placeholder="Ex. Robot pâtissier"></div>
+      <div class="field"><label for="d">Description (facultatif)</label><input id="d" placeholder="Ex. Coloris rouge, modèle KitchenAid"></div>
+      <div class="field"><label for="l">Lien (facultatif)</label><input id="l" placeholder="https://..."></div>
+      <div class="field"><label for="p">Prix (facultatif)</label><input id="p" inputmode="decimal" placeholder="Ex. 129,99"></div>
+      <div class="field"><label for="f">Photo (facultatif)</label><input id="f" type="file" accept="image/*"></div>
+      <button class="btn primary" id="addbtn">Ajouter à la liste</button>
+    </div>
+    <div id="status" role="status"></div>
+    <footer><button id="edit">Espace mariés</button></footer>
+  </div>
+</section>
+<script>
+(function(){
+var items=[],editing=false,editId=null,pwd=sessionStorage.getItem('pwd')||'';
+var root=document.getElementById('root'),admin=document.getElementById('admin'),status=document.getElementById('status'),editBtn=document.getElementById('edit');
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function say(m){status.textContent=m}
+function money(p){return /^[\d\s.,]+$/.test(p)?p+' €':p}
+function ghost(label,fn,cls){var b=el('button','btn '+(cls||'ghost'),label);b.onclick=fn;return b}
+function render(){
+ root.innerHTML='';
+ if(!items.length)root.appendChild(el('div','empty','La liste est vide pour le moment.'));
+ var grid=el('div','gift-grid');
+ items.forEach(function(it){
+  var c=el('div','gift-card');
+  if(editing&&editId===it.id){
+   var F=el('div');
+   [['name','Nom du cadeau'],['desc','Description'],['link','Lien https://…'],['price','Prix']].forEach(function(k){var i=el('input');i.value=it[k[0]]||'';i.placeholder=k[1];i.setAttribute('aria-label',k[1]);i.dataset.k=k[0];i.style.marginBottom='8px';F.appendChild(i)});
+   var A2=el('div','card-admin-row');
+   A2.appendChild(ghost('Enregistrer',function(){var v={};F.querySelectorAll('input').forEach(function(i){v[i.dataset.k]=i.value.trim()});
+    if(!v.name){say('Le nom est obligatoire.');return}
+    if(v.link&&!/^https?:\/\//i.test(v.link)){say('Le lien doit commencer par https://');return}
+    it.name=v.name;it.desc=v.desc;it.link=v.link;it.price=v.price;editId=null;save()},'primary'));
+   A2.appendChild(ghost('Annuler',function(){editId=null;say('');render()}));
+   F.appendChild(A2);c.appendChild(F);grid.appendChild(c);return;
+  }
+  if(it.photo){var im=el('img','photo');im.src=it.photo;im.alt=it.name;im.loading='lazy';c.appendChild(im)}
+  c.appendChild(el('div','name',it.name));
+  if(it.price)c.appendChild(el('div','price',money(it.price)));
+  if(it.desc)c.appendChild(el('div','desc',it.desc));
+  var st=el('div','status'+(it.done?' taken':''));st.appendChild(el('span','dot'));st.appendChild(document.createTextNode(it.done?'Offert':'Disponible'));c.appendChild(st);
+  var row=el('div','row');
+  if(it.link){var a=el('a','btn',"Voir l'article");a.href=it.link;a.target='_blank';a.rel='noopener noreferrer';row.appendChild(a)}
+  c.appendChild(row);
+  if(editing){
+   var A=el('div','card-admin-row');
+   A.appendChild(ghost(it.done?'Remettre disponible':'Marquer comme offert',function(){it.done=!it.done;save()}));
+   A.appendChild(ghost('Modifier',function(){editId=it.id;say('');render()}));
+   A.appendChild(ghost(it.photo?'Changer la photo':'Ajouter une photo',function(){pick(function(f){upload(it,f)})}));
+   A.appendChild(ghost('Supprimer',function(){if(confirm('Supprimer « '+it.name+' » ?')){items=items.filter(function(x){return x!==it});save()}}));
+   c.appendChild(A);
+  }
+  grid.appendChild(c);
+ });
+ root.appendChild(grid);
+ admin.style.display=editing?'block':'none';
+ editBtn.textContent=editing?"Quitter l'espace mariés":'Espace mariés';
+}
+function load(){
+ return fetch('/api/gifts',{headers:{'x-admin-password':pwd},cache:'no-store'}).then(function(r){return r.json()}).then(function(d){items=d.items;return d.admin});
+}
+function shrink(file){return new Promise(function(res,rej){var img=new Image(),u=URL.createObjectURL(file);img.onload=function(){var s=Math.min(1,800/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(function(b){b?res(b):rej()},'image/jpeg',.82)};img.onerror=rej;img.src=u})}
+function sendPhoto(id,file){return shrink(file).then(function(b){return fetch('/api/photo?id='+encodeURIComponent(id),{method:'PUT',headers:{'x-admin-password':pwd},body:b})}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(d){return d.url})}
+function pick(cb){var i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=function(){if(i.files[0])cb(i.files[0])};i.click()}
+function upload(it,f){say('Envoi de la photo…');sendPhoto(it.id,f).then(function(u){it.photo=u;save()}).catch(function(){say("La photo n'a pas pu être envoyée.")})}
+function save(){
+ render();say('Enregistrement…');
+ fetch('/api/gifts',{method:'PUT',headers:{'Content-Type':'application/json','x-admin-password':pwd},body:JSON.stringify({items:items})})
+ .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
+ .then(function(d){items=d.items;render();say('Enregistré ✓')})
+ .catch(function(){say("L'enregistrement a échoué. Vérifie le mot de passe et ta connexion.")});
+}
+document.getElementById('addbtn').onclick=function(){
+ var n=document.getElementById('n').value.trim();if(!n)return;
+ var l=document.getElementById('l').value.trim(),f=document.getElementById('f').files[0];
+ var it={id:'g'+Date.now(),name:n,desc:document.getElementById('d').value.trim(),link:/^https?:\/\//i.test(l)?l:'',price:document.getElementById('p').value.trim(),photo:'',done:false};
+ ['n','d','l','p','f'].forEach(function(i){document.getElementById(i).value=''});
+ items.push(it);
+ if(f){say('Envoi de la photo…');sendPhoto(it.id,f).then(function(u){it.photo=u;save()}).catch(function(){say("La photo n'a pas pu être envoyée.");save()})}else save();
+};
+editBtn.onclick=function(){
+ if(editing){editing=false;editId=null;render();return}
+ if(!pwd)pwd=prompt('Mot de passe des mariés :')||'';
+ load().then(function(ok){
+  if(ok){sessionStorage.setItem('pwd',pwd);editing=true;say('')}
+  else{pwd='';sessionStorage.removeItem('pwd');say('Mot de passe incorrect.')}
+  render();
+ });
+};
+load().then(function(){render()}).catch(function(){say('Impossible de charger la liste.')});
+})();
+</script>
+</body>
+</html>
