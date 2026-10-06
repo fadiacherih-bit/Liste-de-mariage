@@ -190,7 +190,7 @@ export default async (req) => {
 
   const store = getStore({ name: "mariage", consistency: "strong" });
   if (req.method === "GET") {
-    const data = await store.get("liste", { type: "json" });
+    const data = await store.get("liste-v2", { type: "json" });
     return Response.json({ items: data?.items ?? SEED, admin: isAdmin }, { headers: noStore });
   }
   if (req.method === "PUT") {
@@ -198,7 +198,7 @@ export default async (req) => {
     const body = await req.json().catch(() => null);
     const items = sanitize(body?.items);
     if (!items) return new Response("Données invalides", { status: 400 });
-    await store.setJSON("liste", { items });
+    await store.setJSON("liste-v2", { items });
     return Response.json({ items }, { headers: noStore });
   }
   return new Response("Méthode non autorisée", { status: 405 });
