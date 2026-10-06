@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Liste de mariage — Fadia &amp; Moussa</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf6f0;--card:#fff;--ink:#2e2a26;--mute:#7a7068;--accent:#a8793f;--line:#e8dfd2;--ok:#4a7c59}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1917;--card:#26221f;--ink:#f1ebe3;--mute:#a79c90;--accent:#d3a566;--line:#3a342f;--ok:#7fb48e}}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.55}
+main{max-width:720px;margin:0 auto;padding:32px 18px 64px}
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;text-align:center;margin:0}
+h1{font-size:2.6rem;color:var(--accent)} h1.n{font-size:1.8rem;color:var(--ink)}
+.date{text-align:center;color:var(--mute);letter-spacing:.15em;text-transform:uppercase;font-size:.85rem;margin:6px 0 28px}
+.msg{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center}
+.msg p{margin:0 0 12px}.ar{font-size:1.15rem;line-height:1.9;color:var(--accent)}
+h2{font-size:1.8rem;margin:36px 0 6px}
+.sub{text-align:center;color:var(--mute);font-size:.9rem;margin:0 0 18px}
+.item{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.t{font-weight:500}.d{color:var(--mute);font-size:.88rem}.item a{color:var(--accent);font-size:.88rem}
+.badge{font-size:.78rem;padding:3px 10px;border-radius:99px;border:1px solid var(--ok);color:var(--ok);white-space:nowrap}
+.item.off{opacity:.6}.item.off .t{text-decoration:line-through}.item.off .badge{border-color:var(--mute);color:var(--mute)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;width:100%}
+button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.pri{background:var(--accent);border-color:var(--accent);color:#fff}button.del{color:#b4483c}
+#admin{display:none}
+.add{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:20px}
+.add input{width:100%;margin:0 0 8px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+#status{text-align:center;color:var(--mute);font-size:.85rem;min-height:1.2em;margin-top:14px}
+.bar{text-align:center;margin-top:28px}
+</style>
+</head>
+<body>
+<main>
+<h1>Liste de mariage</h1>
+<h1 class="n">Fadia &amp; Moussa</h1>
+<div class="date">8 mai 2027</div>
+<div class="msg">
+<p>Chers proches, nous sommes profondément touchés de vous savoir à nos côtés pour ce jour si important. Votre présence est, avant toute chose, le plus beau des cadeaux que vous puissiez nous faire. Nous vous remercions infiniment pour ce geste, qui nous touche énormément.</p>
+<p><em>Avec tout notre amour, Fadia &amp; Moussa</em></p>
+<p class="ar" dir="rtl" lang="ar">جزاكم الله خيرا على محبتكم وكرمكم، وبارك الله في أسركم، ورزقكم الصحة وراحة القلب وبركته، وأبقاكم دائما قريبين منا.</p>
+<p>Qu'Allah vous récompense pour votre amour et votre générosité, qu'Il bénisse vos familles, vous accorde la santé, la paix du cœur et Sa barakah, et qu'Il vous garde toujours proches de nous. Amine</p>
+</div>
+<h2>Notre liste</h2>
+<p class="sub">Le statut de chaque cadeau est mis à jour par les mariés</p>
+<div id="root"></div>
+<div id="admin">
+<div class="add">
+<strong>Ajouter un cadeau</strong><div style="height:8px"></div>
+<input id="n" placeholder="Nom du cadeau" aria-label="Nom du cadeau">
+<input id="d" placeholder="Description (facultatif)" aria-label="Description">
+<input id="l" placeholder="Lien (facultatif) — https://…" aria-label="Lien">
+<input id="p" placeholder="Prix (facultatif)" aria-label="Prix">
+<button class="pri" id="addbtn">Ajouter à la liste</button>
+</div>
+</div>
+<div id="status" role="status"></div>
+<div class="bar"><button id="edit">Espace mariés</button></div>
+</main>
+<script>
+(function(){
+var items=[],editing=false,pwd=sessionStorage.getItem('pwd')||'';
+var root=document.getElementById('root'),admin=document.getElementById('admin'),status=document.getElementById('status'),editBtn=document.getElementById('edit');
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function say(m){status.textContent=m}
+function render(){
+ root.innerHTML='';
+ if(!items.length)root.appendChild(el('p','sub','La liste est vide pour le moment.'));
+ items.forEach(function(it){
+  var r=el('div','item'+(it.done?' off':'')),L=el('div');
+  L.appendChild(el('div','t',it.name));
+  var sub=[it.desc,it.price].filter(Boolean).join(' · ');
+  if(sub)L.appendChild(el('div','d',sub));
+  if(it.link){var a=el('a',null,"Voir l'article");a.href=it.link;a.target='_blank';a.rel='noopener noreferrer';L.appendChild(a)}
+  r.appendChild(L);r.appendChild(el('span','badge',it.done?'Offert':'Disponible'));
+  if(editing){
+   var A=el('div','acts'),b=el('button',null,it.done?'Remettre disponible':'Marquer comme offert');
+   b.onclick=function(){it.done=!it.done;save()};
+   var d=el('button','del','Supprimer');
+   d.onclick=function(){if(confirm('Supprimer « '+it.name+' » ?')){items=items.filter(function(x){return x!==it});save()}};
+   A.appendChild(b);A.appendChild(d);r.appendChild(A);
+  }
+  root.appendChild(r);
+ });
+ admin.style.display=editing?'block':'none';
+ editBtn.textContent=editing?"Quitter l'espace mariés":'Espace mariés';
+}
+function load(){
+ return fetch('/api/gifts',{headers:{'x-admin-password':pwd},cache:'no-store'}).then(function(r){return r.json()}).then(function(d){items=d.items;return d.admin});
+}
+function save(){
+ render();say('Enregistrement…');
+ fetch('/api/gifts',{method:'PUT',headers:{'Content-Type':'application/json','x-admin-password':pwd},body:JSON.stringify({items:items})})
+ .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
+ .then(function(d){items=d.items;render();say('Enregistré ✓')})
+ .catch(function(){say("L'enregistrement a échoué. Vérifie le mot de passe et ta connexion.")});
+}
+document.getElementById('addbtn').onclick=function(){
+ var n=document.getElementById('n').value.trim();if(!n)return;
+ var l=document.getElementById('l').value.trim();
+ items.push({id:'g'+Date.now(),name:n,desc:document.getElementById('d').value.trim(),link:/^https?:\/\//i.test(l)?l:'',price:document.getElementById('p').value.trim(),done:false});
+ ['n','d','l','p'].forEach(function(i){document.getElementById(i).value=''});
+ save();
+};
+editBtn.onclick=function(){
+ if(editing){editing=false;render();return}
+ if(!pwd)pwd=prompt('Mot de passe des mariés :')||'';
+ load().then(function(ok){
+  if(ok){sessionStorage.setItem('pwd',pwd);editing=true;say('')}
+  else{pwd='';sessionStorage.removeItem('pwd');say('Mot de passe incorrect.')}
+  render();
+ });
+};
+load().then(function(){render()}).catch(function(){say('Impossible de charger la liste.')});
+})();
+</script>
+</body>
+</html>
